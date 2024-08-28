@@ -201,14 +201,14 @@ def build_url(params):
     if params.get("service"):
         _in_query_parameters = PAYLOAD_FORMAT["get"]["query"].keys()
         return yarl.URL(
-            ("https://{vcenter_hostname}" "/api/appliance/services/").format(**params)
+            ("https://{vcenter_hostname}" "/rest/vcenter/services/").format(**params)
             + params["service"]
             + gen_args(params, _in_query_parameters),
             encoded=True,
         )
     _in_query_parameters = PAYLOAD_FORMAT["list"]["query"].keys()
     return yarl.URL(
-        ("https://{vcenter_hostname}" "/api/appliance/services").format(**params)
+        ("https://{vcenter_hostname}" "/rest/vcenter/services").format(**params)
         + gen_args(params, _in_query_parameters),
         encoded=True,
     )
