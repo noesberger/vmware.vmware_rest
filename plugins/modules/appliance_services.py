@@ -218,7 +218,7 @@ async def main():
 
 # template: default_module.j2
 def build_url(params):
-    return ("https://{vcenter_hostname}" "/api/appliance/services").format(**params)
+    return ("https://{vcenter_hostname}" "/rest/vcenter/services").format(**params)
 
 
 async def entry_point(module, session):
@@ -242,7 +242,7 @@ async def _restart(params, session):
     _in_query_parameters = PAYLOAD_FORMAT["restart"]["query"].keys()
     payload = prepare_payload(params, PAYLOAD_FORMAT["restart"])
     subdevice_type = get_subdevice_type(
-        "/api/appliance/services/{service}?action=restart"
+        "/rest/vcenter/services/{service}?action=restart"
     )
     if subdevice_type and not params[subdevice_type]:
         _json = await exists(params, session, build_url(params))
@@ -251,7 +251,7 @@ async def _restart(params, session):
     _url = (
         "https://{vcenter_hostname}"
         # aa
-        "/api/appliance/services/{service}?action=restart"
+        "/rest/vcenter/services/{service}?action=restart"
     ).format(**params) + gen_args(params, _in_query_parameters)
     async with session.post(_url, json=payload, **session_timeout(params)) as resp:
         try:
@@ -269,7 +269,7 @@ async def _start(params, session):
     _in_query_parameters = PAYLOAD_FORMAT["start"]["query"].keys()
     payload = prepare_payload(params, PAYLOAD_FORMAT["start"])
     subdevice_type = get_subdevice_type(
-        "/api/appliance/services/{service}?action=start"
+        "/rest/vcenter/services/{service}?action=start"
     )
     if subdevice_type and not params[subdevice_type]:
         _json = await exists(params, session, build_url(params))
@@ -278,7 +278,7 @@ async def _start(params, session):
     _url = (
         "https://{vcenter_hostname}"
         # aa
-        "/api/appliance/services/{service}?action=start"
+        "/rest/vcenter/services/{service}?action=start"
     ).format(**params) + gen_args(params, _in_query_parameters)
     async with session.post(_url, json=payload, **session_timeout(params)) as resp:
         try:
@@ -295,7 +295,7 @@ async def _start(params, session):
 async def _stop(params, session):
     _in_query_parameters = PAYLOAD_FORMAT["stop"]["query"].keys()
     payload = prepare_payload(params, PAYLOAD_FORMAT["stop"])
-    subdevice_type = get_subdevice_type("/api/appliance/services/{service}?action=stop")
+    subdevice_type = get_subdevice_type("/rest/vcenter/services/{service}?action=stop")
     if subdevice_type and not params[subdevice_type]:
         _json = await exists(params, session, build_url(params))
         if _json:
@@ -303,7 +303,7 @@ async def _stop(params, session):
     _url = (
         "https://{vcenter_hostname}"
         # aa
-        "/api/appliance/services/{service}?action=stop"
+        "/rest/vcenter/services/{service}?action=stop"
     ).format(**params) + gen_args(params, _in_query_parameters)
     async with session.post(_url, json=payload, **session_timeout(params)) as resp:
         try:
